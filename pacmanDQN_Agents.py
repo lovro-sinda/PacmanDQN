@@ -25,11 +25,12 @@ from collections import deque
 import tensorflow as tf
 from DQN import *
 
+tf.compat.v1.disable_eager_execution()
 params = {
     # Model backups
     'load_file': None,
-    'save_file': None,
-    'save_interval' : 10000, 
+    'save_file': "lovro",
+    'save_interval' : 1000, 
 
     # Training parameters
     'train_start': 5000,    # Episodes before training starts
@@ -61,8 +62,8 @@ class PacmanDQN(game.Agent):
         self.params['num_training'] = args['numTraining']
 
         # Start Tensorflow session
-        gpu_options = tf.GPUOptions(per_process_gpu_memory_fraction=0.1)
-        self.sess = tf.Session(config = tf.ConfigProto(gpu_options = gpu_options))
+        gpu_options = tf.compat.v1.GPUOptions(per_process_gpu_memory_fraction=0.1)
+        self.sess = tf.compat.v1.Session(config = tf.compat.v1.ConfigProto(gpu_options = gpu_options))
         self.qnet = DQN(self.params)
 
         # time started
